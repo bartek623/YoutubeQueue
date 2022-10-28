@@ -24,3 +24,27 @@
   padding: 1.2rem;
   background-color: rgba(100, 100, 100, 0.05);
 }
+
+/* 1150px */
+@media (max-width: 72em) {
+  .main-header {
+    font-size: 0.8rem;
+    letter-spacing: 0;
+  }
+
+  .main {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* 400px */
+@media (max-width: 25em) {
+  .main {
+    padding: 0;
+  }
+
+  .main aside {
+    padding: 0;
+  }
+}
