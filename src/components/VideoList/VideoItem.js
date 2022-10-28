@@ -11,6 +11,10 @@ function VideoItem(props) {
     getVideoInfo(props.id, setVideoInfo);
   }, [getVideoInfo]);
 
+  const deleteHandler = function () {
+    props.onRemove(props.id);
+  };
+
   if (!videoInfo) return;
 
   const title =
@@ -27,6 +31,9 @@ function VideoItem(props) {
           {isLoading && "loading"}
           {!isLoading && videoInfo.channelTitle}
         </p>
+        <button className={styles["close-btn"]} onClick={deleteHandler}>
+          <span class="material-symbols-outlined">delete</span>
+        </button>
       </div>
     </li>
   );

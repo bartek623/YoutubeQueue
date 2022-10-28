@@ -44,7 +44,7 @@ function Homepage() {
         <Player currVideo={currentVideo} onEnd={changeVideoOnPlayer}></Player>
         <aside>
           <SearchBox onSubmit={addToQueue}></SearchBox>
-          <VideoList videos={queue}></VideoList>
+          <VideoList videos={queue} onRemove={removeFromQueue}></VideoList>
         </aside>
       </main>
     </>
