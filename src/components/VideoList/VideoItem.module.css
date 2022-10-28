@@ -1,5 +1,6 @@
 .item {
   display: flex;
+  position: relative;
 
   background-color: #181818;
   border-radius: 1rem;
@@ -19,4 +20,25 @@
 .item p {
   color: #777;
   font-weight: 700;
+}
+
+.close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: none;
+  color: #777;
+  border: none;
+
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  cursor: pointer;
+  color: #444;
 }
