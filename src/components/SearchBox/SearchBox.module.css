@@ -1,0 +1,45 @@
+.search-box {
+  padding: 1rem;
+  background-color: #222;
+}
+
+.heading {
+  font-size: 1.8rem;
+  color: #777;
+  margin-bottom: 0.8rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form input,
+.form button {
+  padding: 0.6rem 1.2rem;
+  font-size: 1.6rem;
+  border: 1px solid #444;
+  border-radius: 8px;
+}
+
+.form input {
+  background-color: #333;
+  color: #ccc;
+
+  border-radius: 8px;
+  margin-bottom: 0.8rem;
+}
+
+.form button {
+  background-color: #444;
+  color: #aaa;
+  font-weight: 600;
+  margin-bottom: 1.6rem;
+
+  transition: all 0.2s;
+}
+
+.form button:hover {
+  cursor: pointer;
+  background-color: #282828;
+}
