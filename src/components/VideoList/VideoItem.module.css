@@ -1,0 +1,22 @@
+.item {
+  display: flex;
+
+  background-color: #181818;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.item div {
+  padding: 0.4rem 0.8rem;
+}
+
+.item h4 {
+  color: #999;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.item p {
+  color: #777;
+  font-weight: 700;
+}
