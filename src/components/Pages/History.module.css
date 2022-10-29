@@ -1,0 +1,26 @@
+.main {
+  padding: 2.4rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 1.2rem;
+  row-gap: 2.4rem;
+}
+
+@media (max-width: 94em) {
+  .main {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 69em) {
+  .main {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 50em) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 1.2rem 0;
+  }
+}
