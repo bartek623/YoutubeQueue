@@ -1,18 +1,21 @@
+import React from "react";
+
 import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 
 import styles from "./VideoItem.module.css";
 
 function VideoItem(props) {
-  const { isLoading, error, getVideoInfo } = useFetch();
+  const { isLoading, getVideoInfo } = useFetch();
   const [videoInfo, setVideoInfo] = useState(null);
+  const { id } = props;
 
   useEffect(() => {
-    getVideoInfo(props.id, setVideoInfo);
-  }, [getVideoInfo]);
+    getVideoInfo(id, setVideoInfo);
+  }, [getVideoInfo, id]);
 
   const deleteHandler = function () {
-    props.onRemove(props.id);
+    props.onRemove(id);
   };
 
   if (!videoInfo) return;
@@ -22,21 +25,26 @@ function VideoItem(props) {
       ? videoInfo.title.slice(0, 48) + "..."
       : videoInfo.title;
 
+  if (isLoading) {
+    return (
+      <li className={styles.item}>
+        <div className={styles["loading-box"]}></div>
+      </li>
+    );
+  }
+
   return (
     <li className={styles.item}>
-      <img src={videoInfo.thumbnails.default.url}></img>
+      <img src={videoInfo.thumbnails.default.url} alt="video thumbnail"></img>
       <div>
         <h4>{title}</h4>
-        <p>
-          {isLoading && "loading"}
-          {!isLoading && videoInfo.channelTitle}
-        </p>
+        <p>{videoInfo.channelTitle}</p>
         <button className={styles["close-btn"]} onClick={deleteHandler}>
-          <span class="material-symbols-outlined">delete</span>
+          <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
     </li>
   );
 }
 
-export default VideoItem;
+export default React.memo(VideoItem);
