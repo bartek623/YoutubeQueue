@@ -1,21 +1,23 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { useEffect, useState } from "react";
+
 import useFetch from "../../hooks/useFetch";
+import { QueueContext } from "../../store/queue-context";
 
 import styles from "./VideoItem.module.css";
 
 function VideoItem(props) {
   const { isLoading, getVideoInfo } = useFetch();
   const [videoInfo, setVideoInfo] = useState(null);
-  const { id } = props;
+  const { id, parent } = props;
+  const { onQueueRemove } = useContext(QueueContext);
 
   useEffect(() => {
     getVideoInfo(id, setVideoInfo);
   }, [getVideoInfo, id]);
 
   const deleteHandler = function () {
-    props.onRemove(id);
+    onQueueRemove(id);
   };
 
   if (!videoInfo) return;
@@ -35,13 +37,17 @@ function VideoItem(props) {
 
   return (
     <li className={styles.item}>
-      <img src={videoInfo.thumbnails.default.url} alt="video thumbnail"></img>
+      {!!videoInfo.thumbnails && (
+        <img src={videoInfo.thumbnails.default.url} alt="video thumbnail"></img>
+      )}
       <div>
         <h4>{title}</h4>
         <p>{videoInfo.channelTitle}</p>
-        <button className={styles["close-btn"]} onClick={deleteHandler}>
-          <span className="material-symbols-outlined">delete</span>
-        </button>
+        {parent !== "History" && (
+          <button className={styles["close-btn"]} onClick={deleteHandler}>
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        )}
       </div>
     </li>
   );

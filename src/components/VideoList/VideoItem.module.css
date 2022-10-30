@@ -25,6 +25,10 @@
 }
 
 .close-btn {
+  display: none;
+}
+
+.item:hover .close-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,9 +44,9 @@
   transition: all 0.2s;
 }
 
-.close-btn:hover {
+.item:hover .close-btn:hover {
   cursor: pointer;
-  color: #444;
+  color: red;
 }
 
 .loading-box {
