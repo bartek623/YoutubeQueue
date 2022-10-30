@@ -1,46 +1,41 @@
+import { useCallback, useContext, useEffect, useState } from "react";
+
 import SearchBox from "../SearchBox/SearchBox";
 import VideoList from "../VideoList/VideoList";
 import Player from "../Player/Player";
 import styles from "./Homepage.module.css";
-import { useCallback, useEffect, useState } from "react";
 
-function Homepage(props) {
+import { QueueContext } from "../../store/queue-context";
+
+function Homepage() {
   const [currentVideo, setCurrentVideo] = useState("");
-  const { queue, setQueue, addToHistory } = props;
+  const { videos, onQueueRemove, onQueueAdd, onHistoryAdd } =
+    useContext(QueueContext);
+
+  const { queue } = videos;
 
   const addToQueue = function (videoId) {
-    setQueue((prev) => {
-      if (prev.some((id) => id === videoId)) return prev;
+    if (videos.queue.length === 0 && !currentVideo) {
+      changeVideoOnPlayer(videoId);
+      return;
+    }
 
-      if (prev.length === 0 && !currentVideo) {
-        changeVideoOnPlayer(videoId);
-        return [];
-      }
-
-      return [...prev, videoId];
-    });
+    onQueueAdd(videoId);
   };
-
-  const removeFromQueue = useCallback(
-    (videoId) => {
-      setQueue((prev) => prev.filter((el) => el !== videoId));
-    },
-    [setQueue]
-  );
 
   const changeVideoOnPlayer = useCallback(
     (videoId = "") => {
       if (queue.length === 0) {
-        addToHistory(videoId);
+        onHistoryAdd(videoId);
         setCurrentVideo(videoId);
         return;
       }
 
-      addToHistory(queue[0]);
+      onHistoryAdd(queue[0]);
       setCurrentVideo(queue[0]);
-      removeFromQueue(queue[0]);
+      onQueueRemove(queue[0]);
     },
-    [addToHistory, removeFromQueue, queue]
+    [onHistoryAdd, onQueueRemove, queue]
   );
 
   useEffect(() => {
@@ -54,7 +49,7 @@ function Homepage(props) {
       <Player currVideo={currentVideo} onEnd={changeVideoOnPlayer}></Player>
       <aside>
         <SearchBox onSubmit={addToQueue}></SearchBox>
-        <VideoList videos={queue} onRemove={removeFromQueue}></VideoList>
+        <VideoList></VideoList>
       </aside>
     </main>
   );

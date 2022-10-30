@@ -12,7 +12,16 @@ function useFetch() {
         `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${key}`
       );
 
-      if (!res.ok) throw new Error("Something went wrong");
+      if (!res.ok) {
+        const data = {
+          title: "Video info cannot be fetched",
+          channelTitle: videoId,
+        };
+        dataFn(data);
+
+        setIsLoading(false);
+        throw new Error("Something went wrong");
+      }
 
       const data = await res.json();
       dataFn(data.items[0].snippet);
