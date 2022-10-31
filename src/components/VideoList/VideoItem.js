@@ -1,54 +1,36 @@
 import React, { useContext } from "react";
-import { useEffect, useState } from "react";
 
-import useFetch from "../../hooks/useFetch";
 import { QueueContext } from "../../store/queue-context";
 
 import styles from "./VideoItem.module.css";
 
 function VideoItem(props) {
-  const { isLoading, getVideoInfo } = useFetch();
-  const [videoInfo, setVideoInfo] = useState(null);
-  const { id, parent } = props;
+  const { parent, data } = props;
   const { videos, onQueueRemove, onQueueAdd } = useContext(QueueContext);
 
-  const isQueued = videos.queue.includes(id);
-
-  useEffect(() => {
-    getVideoInfo(id, setVideoInfo);
-  }, [getVideoInfo, id]);
+  const isQueued = videos.queue.some((vidData) => vidData.id === data.id);
 
   const deleteHandler = function () {
-    onQueueRemove(id);
+    onQueueRemove(data.id);
   };
 
   const addHandler = function () {
-    onQueueAdd(id);
+    onQueueAdd(data);
   };
 
-  if (!videoInfo) return;
+  if (!data) return;
 
   const title =
-    videoInfo.title.length > 48
-      ? videoInfo.title.slice(0, 48) + "..."
-      : videoInfo.title;
-
-  if (isLoading) {
-    return (
-      <li className={styles.item}>
-        <div className={styles["loading-box"]}></div>
-      </li>
-    );
-  }
+    data.title.length > 48 ? data.title.slice(0, 48) + "..." : data.title;
 
   return (
     <li className={styles.item}>
-      {!!videoInfo.thumbnails && (
-        <img src={videoInfo.thumbnails.default.url} alt="video thumbnail"></img>
+      {!!data.thumbnails && (
+        <img src={data.thumbnails.default.url} alt="video thumbnail"></img>
       )}
       <div>
         <h4>{title}</h4>
-        <p>{videoInfo.channelTitle}</p>
+        <p>{data.channelTitle}</p>
         {parent !== "History" && (
           <button
             className={`${styles["close-btn"]} ${styles.btn}`}

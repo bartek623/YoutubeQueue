@@ -1,9 +1,11 @@
 import { useRef } from "react";
+import useFetch from "../../hooks/useFetch";
 
 import styles from "./SearchBox.module.css";
 
 function SearchBox(props) {
   const inputRef = useRef();
+  const { isLoading, getVideoInfo } = useFetch();
 
   const submitHandler = function (e) {
     e.preventDefault();
@@ -18,14 +20,13 @@ function SearchBox(props) {
       code = link?.split("=")[1]?.split("&")[0];
     } else if (link.includes("youtu.be")) {
       code = link.split("/").at(-1);
-      console.log(code);
     } else {
       code = link;
     }
 
     if (!code) return;
 
-    props.onSubmit(code);
+    getVideoInfo(code, props.onSubmit, code === link);
     inputRef.current.value = "";
   };
 
@@ -37,10 +38,11 @@ function SearchBox(props) {
         <input
           type="text"
           ref={inputRef}
-          placeholder="Type full link to youtube video"
+          placeholder="Type full link to youtube video or video title (or keyword)"
         ></input>
         <button type="submit">Add to queue</button>
       </form>
+      {isLoading && <div className={styles["loading-box"]}></div>}
     </div>
   );
 }

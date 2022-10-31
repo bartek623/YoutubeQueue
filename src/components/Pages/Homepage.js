@@ -14,26 +14,26 @@ function Homepage() {
 
   const { queue } = videos;
 
-  const addToQueue = function (videoId) {
+  const addToQueue = function (videoData) {
     if (videos.queue.length === 0 && !currentVideo) {
-      changeVideoOnPlayer(videoId);
+      changeVideoOnPlayer(videoData);
       return;
     }
 
-    onQueueAdd(videoId);
+    onQueueAdd(videoData);
   };
 
   const changeVideoOnPlayer = useCallback(
-    (videoId = "") => {
+    (videoData = "") => {
       if (queue.length === 0) {
-        onHistoryAdd(videoId);
-        setCurrentVideo(videoId);
+        onHistoryAdd(videoData);
+        setCurrentVideo(videoData.id);
         return;
       }
 
       onHistoryAdd(queue[0]);
-      setCurrentVideo(queue[0]);
-      onQueueRemove(queue[0]);
+      setCurrentVideo(queue[0].id);
+      onQueueRemove(queue[0].id);
     },
     [onHistoryAdd, onQueueRemove, queue]
   );
