@@ -15,20 +15,21 @@
 
 .item h4 {
   color: #999;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-bottom: 0.8rem;
 }
 
 .item p {
   color: #777;
+  font-size: 1.2rem;
   font-weight: 700;
 }
 
-.close-btn {
+.btn {
   display: none;
 }
 
-.item:hover .close-btn {
+.item:hover .btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +48,10 @@
 .item:hover .close-btn:hover {
   cursor: pointer;
   color: red;
+}
+.item:hover .add-btn:hover {
+  cursor: pointer;
+  color: green;
 }
 
 .loading-box {

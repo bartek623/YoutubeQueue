@@ -10,7 +10,6 @@ export const QueueContext = React.createContext({
   onQueueAdd: () => {},
   onQueueRemove: () => {},
   onHistoryAdd: () => {},
-  onHistoryRemove: () => {},
 });
 
 const videosReducer = function (state, action) {
@@ -36,11 +35,6 @@ const videosReducer = function (state, action) {
         history: [payload, ...state.history.filter((id) => id !== payload)],
       };
 
-    case "historyRemove":
-      return {
-        ...state,
-        history: state.history.filter((id) => id !== payload),
-      };
     default:
       return state;
   }
@@ -61,10 +55,6 @@ export function QueueContextProvider(props) {
     dispatch({ type: "historyAdd", payload: id });
   };
 
-  const onHistoryRemove = function (id) {
-    dispatch({ type: "historyRemove", payload: id });
-  };
-
   return (
     <QueueContext.Provider
       value={{
@@ -72,7 +62,6 @@ export function QueueContextProvider(props) {
         onQueueAdd,
         onQueueRemove,
         onHistoryAdd,
-        onHistoryRemove,
       }}
     >
       {props.children}

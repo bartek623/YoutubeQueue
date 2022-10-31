@@ -10,7 +10,9 @@ function VideoItem(props) {
   const { isLoading, getVideoInfo } = useFetch();
   const [videoInfo, setVideoInfo] = useState(null);
   const { id, parent } = props;
-  const { onQueueRemove } = useContext(QueueContext);
+  const { videos, onQueueRemove, onQueueAdd } = useContext(QueueContext);
+
+  const isQueued = videos.queue.includes(id);
 
   useEffect(() => {
     getVideoInfo(id, setVideoInfo);
@@ -18,6 +20,10 @@ function VideoItem(props) {
 
   const deleteHandler = function () {
     onQueueRemove(id);
+  };
+
+  const addHandler = function () {
+    onQueueAdd(id);
   };
 
   if (!videoInfo) return;
@@ -44,8 +50,21 @@ function VideoItem(props) {
         <h4>{title}</h4>
         <p>{videoInfo.channelTitle}</p>
         {parent !== "History" && (
-          <button className={styles["close-btn"]} onClick={deleteHandler}>
+          <button
+            className={`${styles["close-btn"]} ${styles.btn}`}
+            onClick={deleteHandler}
+          >
             <span className="material-symbols-outlined">delete</span>
+          </button>
+        )}
+        {parent === "History" && (
+          <button
+            className={`${styles["add-btn"]} ${styles.btn}`}
+            onClick={addHandler}
+          >
+            <span className="material-symbols-outlined">
+              {isQueued ? "check" : "add"}
+            </span>
           </button>
         )}
       </div>
