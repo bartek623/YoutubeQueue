@@ -12,7 +12,16 @@ function SearchBox(props) {
 
     if (link === "") return;
 
-    const code = link?.split("=")[1]?.split("&")[0];
+    let code;
+
+    if (link.includes("youtube")) {
+      code = link?.split("=")[1]?.split("&")[0];
+    } else if (link.includes("youtu.be")) {
+      code = link.split("/").at(-1);
+      console.log(code);
+    } else {
+      code = link;
+    }
 
     if (!code) return;
 
