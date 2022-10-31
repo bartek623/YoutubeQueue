@@ -16,7 +16,7 @@ const videosReducer = function (state, action) {
   const { type, payload } = action;
   switch (type) {
     case "queueAdd":
-      if (state.queue.includes(payload)) return state;
+      if (state.queue.some((data) => data.id === payload.id)) return state;
 
       return {
         ...state,
@@ -26,13 +26,16 @@ const videosReducer = function (state, action) {
     case "queueRemove":
       return {
         ...state,
-        queue: state.queue.filter((id) => id !== payload),
+        queue: state.queue.filter((data) => data.id !== payload),
       };
 
     case "historyAdd":
       return {
         ...state,
-        history: [payload, ...state.history.filter((id) => id !== payload)],
+        history: [
+          payload,
+          ...state.history.filter((data) => data.id !== payload.id),
+        ],
       };
 
     default:
@@ -43,16 +46,16 @@ const videosReducer = function (state, action) {
 export function QueueContextProvider(props) {
   const [videos, dispatch] = useReducer(videosReducer, videosInitialState);
 
-  const onQueueAdd = function (id) {
-    dispatch({ type: "queueAdd", payload: id });
+  const onQueueAdd = function (data) {
+    dispatch({ type: "queueAdd", payload: data });
   };
 
   const onQueueRemove = function (id) {
     dispatch({ type: "queueRemove", payload: id });
   };
 
-  const onHistoryAdd = function (id) {
-    dispatch({ type: "historyAdd", payload: id });
+  const onHistoryAdd = function (data) {
+    dispatch({ type: "historyAdd", payload: data });
   };
 
   return (

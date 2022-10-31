@@ -5,33 +5,52 @@ function useFetch() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const getVideoInfo = useCallback(async function (videoId, dataFn) {
+  const getVideoInfo = useCallback(async function (
+    videoId,
+    dataFn,
+    searchByKeyword = false
+  ) {
     setIsLoading(true);
     try {
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${key}`
-      );
+      let res;
+      if (searchByKeyword) {
+        res = await fetch(
+          `https://youtube.googleapis.com/youtube/v3/search?part=snippet&maxResults=1&q=${videoId}&key=${key}`
+        );
+      } else {
+        res = await fetch(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${key}`
+        );
+      }
 
       if (!res.ok) {
         const data = {
           title: "Video info cannot be fetched",
           channelTitle: videoId,
         };
-        dataFn(data);
 
-        setIsLoading(false);
+        dataFn(data);
         throw new Error("Something went wrong");
       }
 
       const data = await res.json();
-      dataFn(data.items[0].snippet);
+      const id = data.items[0].id.videoId
+        ? data.items[0].id.videoId
+        : data.items[0].id;
 
-      setIsLoading(false);
+      const dataTranformed = {
+        ...data.items[0].snippet,
+        id,
+      };
+
+      dataFn(dataTranformed);
     } catch (err) {
       console.error(err);
       setError(err);
     }
-  }, []);
+    setIsLoading(false);
+  },
+  []);
 
   return { isLoading, error, getVideoInfo };
 }
