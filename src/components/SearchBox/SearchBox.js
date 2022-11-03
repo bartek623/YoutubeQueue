@@ -5,7 +5,8 @@ import styles from "./SearchBox.module.css";
 
 function SearchBox(props) {
   const inputRef = useRef();
-  const { isLoading, getVideoInfo } = useFetch();
+  const { isLoading, error, getVideoInfo } = useFetch();
+  const showError = error && inputRef.current.value === "";
 
   const submitHandler = function (e) {
     e.preventDefault();
@@ -38,10 +39,12 @@ function SearchBox(props) {
         <input
           type="text"
           ref={inputRef}
+          className={`${styles.input} ${showError && styles.error}`}
           placeholder="Type full link to youtube video or video title (or keyword)"
         ></input>
         <button type="submit">Add to queue</button>
       </form>
+      {showError && <p className={styles["error-mess"]}>{error}</p>}
       {isLoading && <div className={styles["loading-box"]}></div>}
     </div>
   );

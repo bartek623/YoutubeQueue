@@ -14,27 +14,39 @@
   flex-direction: column;
 }
 
-.form input,
+.input,
 .form button {
   padding: 0.6rem 1.2rem;
   font-size: 1.6rem;
   border: 1px solid #444;
   border-radius: 8px;
+  margin-bottom: 0.8rem;
 }
 
-.form input {
+.input {
   background-color: #333;
   color: #ccc;
 
   border-radius: 8px;
-  margin-bottom: 0.8rem;
+}
+
+.error {
+  border: 1px solid rgb(151, 44, 44);
+  background-color: rgb(83, 46, 46);
+}
+
+.error-mess {
+  text-align: center;
+  color: rgb(161, 67, 67);
+  white-space: pre-line;
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 .form button {
   background-color: #444;
   color: #aaa;
   font-weight: 600;
-  margin-bottom: 1.6rem;
 
   transition: all 0.2s;
 }
