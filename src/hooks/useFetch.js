@@ -3,7 +3,7 @@ const key = "AIzaSyAFvRV7AJVYM520rj6-r95VsVOihc2P1eY";
 
 function useFetch() {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   const getVideoInfo = useCallback(async function (
     videoId,
@@ -11,6 +11,7 @@ function useFetch() {
     searchByKeyword = false
   ) {
     setIsLoading(true);
+    setError("");
     try {
       let res;
       if (searchByKeyword) {
@@ -30,7 +31,10 @@ function useFetch() {
         };
 
         dataFn(data);
-        throw new Error("Something went wrong");
+        throw new Error(
+          `Something went wrong (${res.status}) 💥
+          The video cannot be fetch`
+        );
       }
 
       const data = await res.json();
@@ -46,7 +50,7 @@ function useFetch() {
       dataFn(dataTranformed);
     } catch (err) {
       console.error(err);
-      setError(err);
+      setError(err.message);
     }
     setIsLoading(false);
   },
