@@ -20,8 +20,19 @@ function VideoItem(props) {
 
   if (!data) return;
 
-  const title =
+  // Cut title if it is too long
+  let title =
     data.title.length > 48 ? data.title.slice(0, 48) + "..." : data.title;
+
+  // Parse the titles and replace html entities with symbols
+  title = new DOMParser().parseFromString(title, "text/html").body.firstChild
+    .textContent;
+
+  const channelTitle = new DOMParser().parseFromString(
+    data.channelTitle,
+    "text/html"
+  ).body.firstChild.textContent;
+  //
 
   return (
     <li className={styles.item}>
@@ -30,7 +41,7 @@ function VideoItem(props) {
       )}
       <div>
         <h4>{title}</h4>
-        <p>{data.channelTitle}</p>
+        <p>{channelTitle}</p>
         {parent !== "History" && (
           <button
             className={`${styles["close-btn"]} ${styles.btn}`}
