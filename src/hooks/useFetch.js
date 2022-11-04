@@ -38,13 +38,34 @@ function useFetch() {
       }
 
       const data = await res.json();
+      console.log(data);
+
+      if (
+        !data.items[0].kind.includes("video") &&
+        !data.items[0].id?.kind.includes("video")
+      ) {
+        throw new Error("It is not a video!");
+      }
+
       const id = data.items[0].id.videoId
         ? data.items[0].id.videoId
         : data.items[0].id;
 
+      const title = new DOMParser().parseFromString(
+        data.items[0].snippet.title,
+        "text/html"
+      ).body.firstChild.textContent;
+
+      const channelTitle = new DOMParser().parseFromString(
+        data.items[0].snippet.channelTitle,
+        "text/html"
+      ).body.firstChild.textContent;
+
       const dataTranformed = {
-        ...data.items[0].snippet,
         id,
+        title,
+        channelTitle,
+        thumbnails: data.items[0].snippet.thumbnails,
       };
 
       dataFn(dataTranformed);

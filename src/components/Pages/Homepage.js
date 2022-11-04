@@ -25,15 +25,16 @@ function Homepage() {
 
   const changeVideoOnPlayer = useCallback(
     (videoData = "") => {
-      if (queue.length === 0) {
-        onHistoryAdd(videoData);
-        setCurrentVideo(videoData.id);
-        return;
+      let data = videoData;
+
+      if (queue.length > 0) {
+        data = queue[0];
+        onQueueRemove(data.id);
       }
 
-      onHistoryAdd(queue[0]);
-      setCurrentVideo(queue[0].id);
-      onQueueRemove(queue[0].id);
+      onHistoryAdd(data);
+      setCurrentVideo(data.id);
+      document.title = data.title;
     },
     [onHistoryAdd, onQueueRemove, queue]
   );
