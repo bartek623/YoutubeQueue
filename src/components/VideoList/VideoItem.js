@@ -26,7 +26,7 @@ function VideoItem(props) {
 
   return (
     <li className={styles.item}>
-      {!!data.thumbnails && (
+      {data.thumbnails && (
         <img src={data.thumbnails.default.url} alt="video thumbnail"></img>
       )}
       <div>

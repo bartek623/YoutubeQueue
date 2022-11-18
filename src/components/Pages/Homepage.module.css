@@ -13,6 +13,7 @@
 
   padding: 1.2rem;
   background-color: rgba(100, 100, 100, 0.05);
+  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.05);
 }
 
 /* 1150px */
