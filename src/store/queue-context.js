@@ -8,6 +8,7 @@ const videosInitialState = {
 export const QueueContext = React.createContext({
   videos: videosInitialState,
   onQueueAdd: () => {},
+  onQueueAddToTop: () => {},
   onQueueRemove: () => {},
   onHistoryAdd: () => {},
 });
@@ -21,6 +22,14 @@ const videosReducer = function (state, action) {
       return {
         ...state,
         queue: [...state.queue, payload],
+      };
+
+    case "queueAddToTop":
+      if (state.queue.some((data) => data.id === payload.id)) return state;
+
+      return {
+        ...state,
+        queue: [payload, ...state.queue],
       };
 
     case "queueRemove":
@@ -49,6 +58,9 @@ export function QueueContextProvider(props) {
   const onQueueAdd = function (data) {
     dispatch({ type: "queueAdd", payload: data });
   };
+  const onQueueAddToTop = function (data) {
+    dispatch({ type: "queueAddToTop", payload: data });
+  };
 
   const onQueueRemove = function (id) {
     dispatch({ type: "queueRemove", payload: id });
@@ -63,6 +75,7 @@ export function QueueContextProvider(props) {
       value={{
         videos,
         onQueueAdd,
+        onQueueAddToTop,
         onQueueRemove,
         onHistoryAdd,
       }}

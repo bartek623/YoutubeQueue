@@ -32,6 +32,12 @@ function Homepage() {
         onQueueRemove(data.id);
       }
 
+      if (!data) {
+        document.title = "YoutubeQueue";
+        setCurrentVideo("");
+        return;
+      }
+
       onHistoryAdd(data);
       setCurrentVideo(data.id);
       document.title = data.title;

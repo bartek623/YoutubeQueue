@@ -10,7 +10,12 @@ function History() {
     <VideoItem data={data} key={i + data.id} parent={"History"}></VideoItem>
   ));
 
-  return <main className={styles.main}>{items}</main>;
+  return (
+    <main className={styles.main}>
+      {items}
+      {history.length < 1 && <p>History is empty!</p>}
+    </main>
+  );
 }
 
 export default History;

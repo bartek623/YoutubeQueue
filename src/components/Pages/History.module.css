@@ -6,6 +6,13 @@
   row-gap: 2.4rem;
 }
 
+.main > p {
+  font-size: 2.4rem;
+  text-align: center;
+  color: #777;
+  grid-column: 1/-1;
+}
+
 @media (max-width: 94em) {
   .main {
     grid-template-columns: repeat(3, 1fr);

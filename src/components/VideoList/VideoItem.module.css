@@ -30,6 +30,7 @@
 }
 
 .item:hover .btn {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,4 +53,32 @@
 .item:hover .add-btn:hover {
   cursor: pointer;
   color: green;
+}
+
+.btn::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  translate: -100% 0;
+
+  display: none;
+  width: max-content;
+
+  background-color: #111;
+  color: #888;
+  padding: 4px 8px;
+  border-radius: 5px;
+  opacity: 0.6;
+}
+
+.btn:hover::after {
+  display: block;
+}
+
+.close-btn::after {
+  content: "Remove from queue";
+}
+
+.add-btn::after {
+  content: "Add to queue";
 }

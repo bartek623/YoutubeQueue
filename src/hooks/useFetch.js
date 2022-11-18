@@ -38,7 +38,6 @@ function useFetch() {
       }
 
       const data = await res.json();
-      console.log(data);
 
       if (
         !data.items[0].kind.includes("video") &&
