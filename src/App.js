@@ -16,6 +16,7 @@ function App() {
     setPage("queue");
   };
 
+  // Also could be done with react router but here it is unnecessary
   return (
     <>
       <Header showQueue={showQueue} showHistory={showHistory}></Header>

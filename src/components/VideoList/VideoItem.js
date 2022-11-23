@@ -4,6 +4,8 @@ import { QueueContext } from "../../store/queue-context";
 
 import styles from "./VideoItem.module.css";
 
+const MAX_TITLE_CHARS = 48;
+
 function VideoItem(props) {
   const { parent, data } = props;
   const { videos, onQueueRemove, onQueueAdd } = useContext(QueueContext);
@@ -22,7 +24,9 @@ function VideoItem(props) {
 
   // Cut title if it is too long
   const title =
-    data.title.length > 48 ? data.title.slice(0, 48) + "..." : data.title;
+    data.title.length > MAX_TITLE_CHARS
+      ? data.title.slice(0, MAX_TITLE_CHARS) + "..."
+      : data.title;
 
   return (
     <li className={styles.item}>
