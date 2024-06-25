@@ -10,4 +10,5 @@ Because it is pretty small application I decided to use core features of React i
 
 ## Demo
 
+(Click the image below to redirect to the hosted app)
 [![YoutubeQueue app screenshot](./public/YtQueueScreen.png)](https://ytqueue.netlify.app/)
